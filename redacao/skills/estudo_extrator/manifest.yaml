@@ -1,0 +1,20 @@
+id: redacao/estudo_extrator
+name: Extrator de estudo em PDF
+version: 0.1.0
+description: Converte o PDF de um estudo em texto e extrai identificador arXiv, título e data, para servir de fonte ao validador.
+constitution:
+  - "Não resume nem interpreta: só extrai texto e metadados"
+  - "Corta as referências bibliográficas, para que números de citações não validem números do texto"
+parameters:
+  type: object
+  required: [pdf, destino]
+  properties:
+    pdf: {type: string}
+    destino: {type: string}
+returns:
+  type: object
+  properties:
+    arxiv: {type: string}
+    titulo: {type: string}
+    data: {type: string}
+    palavras: {type: integer}

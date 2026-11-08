@@ -1,0 +1,94 @@
+name: Redação – testes e validação
+
+on:
+  pull_request:
+    paths: ["redacao/**"]
+  push:
+    branches: [main]
+    paths: ["redacao/**"]
+  workflow_dispatch:
+    inputs:
+      arquivos:
+        description: "Matérias a enviar como rascunho (ex.: redacao/materias/minha-materia.md). Vazio = só testar."
+        required: false
+        default: ""
+      verificar_trava:
+        description: "Testar a trava do servidor com a conta da automação (cria um rascunho de teste)."
+        type: boolean
+        default: false
+
+jobs:
+  testar:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: redacao
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: sudo apt-get update && sudo apt-get install -y poppler-utils
+      - run: pip install -r requirements.txt
+      - name: Testes de cada pacote
+        run: |
+          for d in skills/*/ tools/; do
+            if ls "$d"/test_*.py >/dev/null 2>&1; then
+              (cd "$d" && python -m pytest -q)
+            fi
+          done
+      - name: Validar matérias
+        run: |
+          shopt -s nullglob
+          status=0
+          for f in materias/*.md; do
+            echo "== $f"
+            python skills/materia_validador/skill.py "$f" || status=1
+          done
+          exit $status
+
+  enviar:
+    if: github.event_name == 'workflow_dispatch' && github.event.inputs.arquivos != ''
+    needs: testar
+    runs-on: ubuntu-latest
+    environment: wordpress
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -r redacao/requirements.txt
+      - name: Enviar como rascunho
+        env:
+          WP_URL: ${{ secrets.WP_URL }}
+          WP_USER: ${{ secrets.WP_USER }}
+          WP_APP_PASSWORD: ${{ secrets.WP_APP_PASSWORD }}
+          ARQUIVOS: ${{ github.event.inputs.arquivos }}
+        run: |
+          cd redacao
+          set -f
+          lista=()
+          for f in $ARQUIVOS; do
+            f="${f#redacao/}"
+            case "$f" in materias/*.md) lista+=("$f");; *) echo "Ignorado (fora de materias/): $f";; esac
+          done
+          [ ${#lista[@]} -gt 0 ] || { echo "Nenhuma matéria válida"; exit 1; }
+          python tools/enviar_rascunho.py "${lista[@]}"
+
+  trava:
+    if: github.event_name == 'workflow_dispatch' && github.event.inputs.verificar_trava == 'true'
+    needs: testar
+    runs-on: ubuntu-latest
+    environment: wordpress
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -r redacao/requirements.txt
+      - name: Verificar a trava com a conta da automação
+        env:
+          WP_URL: ${{ secrets.WP_URL }}
+          WP_USER: ${{ secrets.WP_USER }}
+          WP_APP_PASSWORD: ${{ secrets.WP_APP_PASSWORD }}
+        run: python redacao/tools/verificar_trava.py

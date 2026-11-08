@@ -1,0 +1,63 @@
+id: redacao/materia_validador
+name: Validador de matéria (regras de exemplo do marcelofleury.com)
+version: 0.1.0
+issuer:
+  name: Redação automatizada (exemplo)
+description: >
+  Confere, sem usar modelo de IA, se uma matéria em Markdown com cabeçalho YAML
+  cumpre o Manual de Redação e Estilo do site e se cada número citado no texto
+  existe nas fontes declaradas.
+constitution:
+  - "Roda offline e de forma determinística: o mesmo arquivo gera sempre o mesmo laudo"
+  - "Não reescreve o texto; só aponta erros (bloqueiam) e avisos (exigem leitura humana)"
+  - "Número que não aparece em nenhuma fonte declarada é erro, nunca aviso"
+parameters:
+  type: object
+  required: [arquivo]
+  properties:
+    arquivo: {type: string, description: "Caminho do .md da matéria"}
+regras:
+  titulo_max_caracteres: 110
+  linha_fina_caracteres: [100, 260]
+  lide_max_palavras: 75
+  intertitulos_h2: [2, 4]
+  paragrafo_max_palavras: 130
+  metadesc_max_caracteres: 156
+  categorias_validas: {13: Ciência, 16: Inteligência Artificial, 17: Cibersegurança, 18: Geopolítica, 19: Comunicação, 12: Tecnologia, 1: Geral, 265: Investigações}
+  legenda_foto_regex: '^.+\. Foto: [^/]+/.+$'
+  expressoes_proibidas:
+    - "vale ressaltar"
+    - "vale destacar"
+    - "é importante destacar"
+    - "é importante ressaltar"
+    - "cabe destacar"
+    - "nesse sentido"
+    - "em suma"
+    - "sendo 100% sincero"
+    - "sem precedentes"
+    - "revolucion"
+    - "disruptiv"
+    - "game changer"
+    - "divisor de águas"
+    - "no fim do dia"
+    - "mergulh"
+    - "jornada"
+    - "alavanc"
+    - "robust"
+    - "extremamente"
+    - "incrivelmente"
+    - "cada vez mais importante"
+    - "não é apenas"
+    - "mais do que nunca"
+  ressalva_no_lide:
+    - "preliminar"
+    - "ainda não foi revisado"
+    - "ainda não passou por revisão"
+    - "deve ser visto com cautela"
+returns:
+  type: object
+  properties:
+    ok: {type: boolean}
+    erros: {type: array, items: {type: string}}
+    avisos: {type: array, items: {type: string}}
+    numeros_conferidos: {type: integer}

@@ -1,0 +1,23 @@
+id: redacao/wp_rascunho
+name: Montador de rascunho do WordPress
+version: 0.1.0
+description: Converte a matéria validada em blocos do Gutenberg e no JSON enviado à API REST do site.
+requires:
+  - redacao/materia_validador
+constitution:
+  - "Status é sempre draft; pedido de publicação é recusado no código"
+  - "Matéria reprovada no validador não vira rascunho"
+  - "Foto entra com legenda no padrão 'Descrição. Foto: Autor/Fonte' e texto alternativo"
+parameters:
+  type: object
+  required: [arquivo]
+  properties:
+    arquivo: {type: string}
+    status: {type: string, enum: [draft], default: draft}
+returns:
+  type: object
+  properties:
+    post: {type: object}
+    tags: {type: array}
+    foto: {type: object}
+    laudo: {type: object}
