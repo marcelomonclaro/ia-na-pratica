@@ -132,7 +132,7 @@ def conferir_numeros(corpo: str, meta: dict, fontes_txt: list[str]) -> tuple[lis
                 erros.append(f"Trecho citado para '{num}' não existe na fonte: '{t[:70]}…'")
             elif not valor_em(t, valor, casas):
                 erros.append(f"Trecho citado para '{num}' não contém esse valor: '{t[:70]}…'")
-    alvo = "\n".join([meta.get("titulo", ""), meta.get("linha_fina", ""), str((meta.get("seo") or {}).get("metadesc", "")), corpo])
+    alvo = "\n".join([meta.get("titulo", ""), str((meta.get("seo") or {}).get("metadesc", "")), corpo])
     alvo = re.sub(r"\]\([^)]+\)", "]", alvo)
     alvo = re.sub(r"\b[A-Za-zÀ-ú]+[\-‑]\d[\d.]*", " ", alvo)  # nomes de modelo: GPT-5.5
     alvo = re.sub(r"arXiv:\S+", " ", alvo)
@@ -160,7 +160,7 @@ def validar(params: dict) -> dict:
     avisos: list[str] = []
 
     pagina = meta.get("tipo", "post") == "pagina"
-    obrig = ["titulo", "slug", "linha_fina", "seo", "foto", "fontes"] + ([] if pagina else ["categorias"])
+    obrig = ["titulo", "slug", "seo", "foto", "fontes"] + ([] if pagina else ["categorias"])
     for campo in obrig:
         if not meta.get(campo):
             erros.append(f"Campo obrigatório vazio: {campo}")
@@ -177,11 +177,9 @@ def validar(params: dict) -> dict:
     if maiusc:
         avisos.append(f"Título tem palavras em maiúscula fora do início: {maiusc}. Confirme que são nomes próprios.")
 
-    # linha fina
-    lf = meta["linha_fina"].strip()
-    a, b = REGRAS["linha_fina_caracteres"]
-    if not a <= len(lf) <= b:
-        erros.append(f"Linha fina com {len(lf)} caracteres (faixa {a}-{b}).")
+    # o Manual não usa linha fina
+    if "linha_fina" in meta:
+        erros.append("O Manual de Redação não usa linha fina: remova o campo linha_fina.")
 
     bs = blocos(corpo)
     paragrafos = [x for x in bs if not x.startswith(("#", "-", "1.", "*")) ]
@@ -214,7 +212,7 @@ def validar(params: dict) -> dict:
         erros.append("Falta o parágrafo sobre os limites do estudo.")
 
     # expressões proibidas
-    baixo = texto_puro(" ".join([t, lf, corpo])).lower()
+    baixo = texto_puro(" ".join([t, corpo])).lower()
     for e in REGRAS["expressoes_proibidas"]:
         if e in baixo:
             erros.append(f"Expressão vetada pelo manual: '{e}'")

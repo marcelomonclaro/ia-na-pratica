@@ -2,7 +2,6 @@
 wp_id: 952
 titulo: Buscadores com IA favorecem marcas conhecidas, e reescrever o site não muda o ranking
 slug: buscadores-ia-favorecem-marcas-conhecidas-estudo
-linha_fina: Estudo do Politecnico di Milano com 19.200 respostas de ChatGPT, Gemini e Perplexity mostra que a marca pesa mais do que o texto da página; técnicas de otimização para IA quase não mexem na posição
 categorias: [16, 19]
 tags: [inteligência artificial, estudo, busca generativa, marketing digital, ChatGPT]
 seo:

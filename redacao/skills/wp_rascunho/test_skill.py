@@ -24,7 +24,7 @@ def test_publicar_e_bloqueado(tmp_path):
 def test_materia_reprovada_nao_vira_rascunho(tmp_path):
     (tmp_path / "f.txt").write_text("nada")
     m = tmp_path / "m.md"
-    m.write_text("---\ntitulo: X\nslug: x\nlinha_fina: curta\ncategorias: [16]\nseo: {palavra_chave: x, metadesc: x}\n"
+    m.write_text("---\ntitulo: X\nslug: x\ncategorias: [16]\nseo: {palavra_chave: x, metadesc: x}\n"
                  "foto: {url: 'https://a', legenda: 'A. Foto: B/C', alt: a}\nfontes: [f.txt]\n---\nTexto com 93,4% inventado.\n")
     with pytest.raises(wp.GateError):
         wp.montar({"arquivo": str(m)})

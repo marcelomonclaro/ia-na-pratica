@@ -86,7 +86,6 @@ def montar(params: dict) -> dict:
             "title": meta["titulo"],
             "slug": meta["slug"],
             "status": "draft",
-            "excerpt": meta["linha_fina"],
             "content": "\n\n".join(partes),
             **({} if pagina else {"categories": [int(c) for c in meta["categorias"]]}),
             "meta": {

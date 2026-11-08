@@ -11,7 +11,6 @@ FONTE = "The model scored 58.2% and later 91.8%. A sample of 1,176 brands. Cost 
 BASE = """---
 titulo: Agentes de IA erram menos com ferramentas prontas
 slug: teste
-linha_fina: Estudo com modelos de linguagem indica que ferramentas prontas reduzem erros e custos em tarefas de agentes de inteligência artificial
 categorias: [16]
 seo:
   palavra_chave: agentes de IA
@@ -119,3 +118,13 @@ def test_legenda_fora_do_padrao(tmp_path):
 def test_parametro_ausente():
     with pytest.raises(ParamError):
         validar({})
+
+
+def test_linha_fina_reprova(tmp_path):
+    """O Manual não usa linha fina: o campo, se vier, é erro."""
+    caminho = escrever(tmp_path)
+    m = open(caminho, encoding="utf-8").read().replace("slug: teste", "slug: teste" + chr(10) + "linha_fina: Qualquer coisa", 1)
+    open(caminho, "w", encoding="utf-8").write(m)
+    laudo = validar({"arquivo": caminho})
+    assert not laudo["ok"]
+    assert any("linha fina" in e for e in laudo["erros"])

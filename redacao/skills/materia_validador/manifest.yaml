@@ -18,7 +18,6 @@ parameters:
     arquivo: {type: string, description: "Caminho do .md da matéria"}
 regras:
   titulo_max_caracteres: 110
-  linha_fina_caracteres: [100, 260]
   lide_max_palavras: 75
   intertitulos_h2: [2, 4]
   paragrafo_max_palavras: 130

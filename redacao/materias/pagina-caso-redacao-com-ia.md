@@ -3,7 +3,6 @@ wp_id: 958
 tipo: pagina
 titulo: "Redação com IA e checagem automática: como funciona no marcelofleury.com"
 slug: redacao-com-ia-checagem-automatica
-linha_fina: A IA escreve, programas fixos conferem o texto e cada número contra a fonte, e uma pessoa decide o que vai ao ar. O mesmo método pode ser aplicado a redações, assessorias e empresas
 seo:
   palavra_chave: redação com IA
   metadesc: "Como o marcelofleury.com usa redação com IA e checagem automática de números contra a fonte, e como o método pode ser aplicado a outras equipes."
@@ -33,7 +32,7 @@ O método segue a proposta de um [estudo sobre agentes de IA](/agentes-ia-ferram
 
 1. **Extração.** Um programa converte o PDF do estudo em texto e lista as frases que contêm números, com a frase original ao lado.
 2. **Redação.** A IA escreve a matéria seguindo o manual de redação do site e indica, para cada número citado, o trecho literal do estudo que o sustenta.
-3. **Validação.** Um segundo programa, sem uso de IA, confere o título, a linha fina, o tamanho do primeiro parágrafo, o número de intertítulos, as expressões vetadas pelo manual, a legenda da foto, os campos de SEO e a presença de um parágrafo sobre os limites do estudo. Também verifica se cada trecho citado existe na fonte e contém o número usado no texto. Matéria com erro não segue adiante.
+3. **Validação.** Um segundo programa, sem uso de IA, confere o título, o tamanho do primeiro parágrafo, o número de intertítulos, as expressões vetadas pelo manual, a legenda da foto, os campos de SEO e a presença de um parágrafo sobre os limites do estudo. Também verifica se cada trecho citado existe na fonte e contém o número usado no texto. Matéria com erro não segue adiante.
 4. **Rascunho.** Um terceiro programa monta o post no WordPress com foto, legenda, categorias e tags. Ele só cria rascunhos, e uma trava instalada no próprio site impede a conta da automação de publicar.
 5. **Publicação.** O editor revisa o rascunho no painel e decide se publica.
 
