@@ -50,6 +50,10 @@ O passo a passo para ligar ao seu WordPress está em [`redacao/README.md`](redac
 
 Correções, adaptações para outros sistemas e relatos de uso são bem-vindos. Veja [`CONTRIBUTING.md`](CONTRIBUTING.md).
 
+## Créditos
+
+A divisão de cada ferramenta em contrato (`manifest.yaml`), código (`skill.py`), instruções para o agente (`instructions.md`) e testes offline (`test_skill.py`) segue o [Skillware](https://github.com/ARPAHLS/skillware), da ARPAHLS, sob licença MIT, assim como o princípio de que o modelo decide e programas testados executam. O código daqui foi escrito do zero.
+
 ## Licença
 
 Código sob [MIT](LICENSE). As matérias de exemplo em `redacao/materias/` são © Marcelo Fleury, publicadas no marcelofleury.com e incluídas só para os testes; o estudo em `redacao/fontes/` é dos seus autores, sob CC BY 4.0 (ver [`redacao/fontes/README.md`](redacao/fontes/README.md)).

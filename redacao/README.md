@@ -11,7 +11,7 @@ O modelo de linguagem escreve e escolhe as evidências; programas fixos e testad
 | `tools/verificar_trava.py` | Tenta publicar ao criar, publicar o rascunho e abrir um post publicado para edição | Reprova se algum passo passar |
 | [`../wordpress/trava-automacao.php`](../wordpress/README.md) | Plugin obrigatório no servidor: a conta da automação não publica | Trava no próprio site |
 
-Cada pacote tem `manifest.yaml` (contrato), `skill.py` (código), `instructions.md` e `test_skill.py` (testes offline).
+Cada pacote tem `manifest.yaml` (contrato), `skill.py` (código), `instructions.md` e `test_skill.py` (testes offline), na estrutura proposta pelo [Skillware](https://github.com/ARPAHLS/skillware).
 
 ## O fluxo
 
