@@ -4,7 +4,7 @@ from pathlib import Path
 
 def extrair(params):
     pdf, destino = Path(params["pdf"]), Path(params["destino"])
-    texto = subprocess.run(["pdftotext", str(pdf), "-"], capture_output=True, text=True, check=True).stdout
+    texto = subprocess.run(["pdftotext", "-enc", "UTF-8", str(pdf), "-"], capture_output=True, text=True, encoding="utf-8", check=True).stdout
     m = re.search(r"arXiv:(\d{4}\.\d{4,5})v\d+\s*\[([^\]]+)\]\s*(\d{1,2} \w{3} \d{4})", texto)
     corte = re.search(r"^\s*(REFERENCES|References)\s*$", texto, re.M)
     corpo = texto

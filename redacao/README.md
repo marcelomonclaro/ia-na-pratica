@@ -42,7 +42,7 @@ pip install -r requirements.txt
 for d in skills/*/ tools/; do (cd "$d" && python -m pytest -q); done
 ```
 
-Esperado: 28 passam e 1 é pulado (o do extrator procura PDFs em `fontes/pdf/`, que ficam fora do Git).
+Esperado: 29 passam e 1 é pulado (o do extrator procura PDFs em `fontes/pdf/`, que ficam fora do Git).
 
 ## Resultado do teste de sensibilidade
 
